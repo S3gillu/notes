@@ -16,6 +16,11 @@ namespace notes
         }
     }
 }
+
+https://rishabh.io/misc/angular-4-project-structure.html
+http://gunnariauvinen.com/what-is/
+https://codecraft.tv/courses/angular/pipes/overview/
+https://www.sitepoint.com/ultimate-angular-cli-reference/
 /*
                                      *** Angular Module 1 ***
 ************************************************************************************************************
@@ -160,6 +165,7 @@ namespace notes
                
            |- devDependencies :- only to develop,e.g. : unit tests, Coffeescript to javascript transpilation,
                                  minification.
+                
            
            |- Features :
                |- (@angular/core) --> critical runtime parts of framework needed by every application.
@@ -208,4 +214,67 @@ namespace notes
 
 | -(rxjs:) --> It is a library for reactive programming using Observables, to make it easier to
      compose asynchronous or callback - based code.
-     */
+
+| -(zone.js)-- > A polyfill for the Zone specification currently before the TC39 committee
+                             that determines standards for the JavaScript language.
+
+| -Other :-
+              | -(angular -in-memory - web - api)
+
+        --> An angular - supported library that simulates a remote server's web api  without requiring
+                     an actual server or real HTTP calls.
+                  -- > Good for demos, samples, and early stage development.
+  
+                | -(bootstrap)-- > It is popular HTML and CSS framework for designing responsive web apps.
+  
+          | -devDependies :-
+              | -The package listed in this section of the package.json helps user to develope the application.
+  
+              | -(concurrently)-- > A utility to run multiple npm commands concurrently on OS / X, Windows,
+                                   and Linux operating systems.
+  
+              | -(lite - server)-- > A light - weight, static file server, by John Papa with excellent support
+                                for Angular apps that use routing.
+
+            | -(typescript)-- > the TypeScript language server, including the tsc TypeScript compiler.
+
+            | -(@types:) --> TypeScript definition files.
+
+
+      (2) tsconfig.json:
+           |- It is a root directory of a TypeScript project.
+           |- It is also used to define different typescript compilation related options.
+           |- It is TypeScript configuration file to guide the compiler.
+           |- It conatins options and flags that are essential for angular applications.
+                             
+     (3) angular-cli.json :
+          |-It is a file used by @angular/cli tool which is used to automate the angular workflow by automating
+            different operations related to development and testing of angular apps.
+          |-It serves as a blueprint to the @angular/cli tool.
+          |- @angular/cli uses "webpack" under the hood to automate the angular workflow.
+
+    (4) src :
+         |- One of the most important directory in angular project.
+         |- This is where we define the actual source code for our application along with all the assets etc.
+
+**************************************************************************************************************
+**************************************************************************************************************
+**************************************************************************************************************
+
+                                     *** Angular Module 4 ***
+**************************************************************************************************************
+
+ **ANGULAR SRC STRUCTURE :
+    |-app
+    |-assets
+    |-enviornments
+    |-favicon.ico
+    |-index.html
+    |-main.ts
+    |-polyfills.ts
+    |-style.css
+    |-test.ts
+    |-tsconfig.app.json
+    |-tsconfig.apec.json
+    |-typing.d.ts
+    */

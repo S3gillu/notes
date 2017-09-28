@@ -643,4 +643,428 @@ Notes :-
 
 
 
-          
+                                              /*/*//*//*//*///***************************************************//////*/*/*/**//////
+
+   /*                                           *** Tour Of Heros Tutorial***
+***************************************************************************************************************
+                                          *** PART ONE***
+***************************************************************************************************************
+ --> {{}} :
+
+      |- Angular's "interpolation binding syntax".
+
+      |- These interpolation bindings present the component's property values , as "strings" , inside the 
+         HTML header tags.
+  
+ --> DISPLAYING DATA :
+
+     |- Data can be displayed by binding controls in an HTML template to properties of an angular component.
+
+                 export class AppComponent
+{
+    property  -->    title = 'Tour of Heroes';  
+   "       -->    hero = 'Windstorm';
+                 }
+
+     |- to display data we can simply bind this property with interpolation in our HTML View.
+        i.e,
+
+          <h1> {{title}} </h1>
+          <h2> {{hero}} </h2>
+
+ --> TEMPLATE :
+
+      |- It is a multi-line string within ECMAScript 2015 backticks( ` ) .
+
+      |- Backtick( ` ) is different from single quote( ' ).
+
+      |- Backtick allows us to compose a "string" over several lines, which makes the HTML more readable.
+    
+      |- It can be defined using two methods :-
+
+         (1) Template "inline" : In it we use template property.
+
+         (2) Template "File"   : In it we define template in a separate HTML file and link to it in the
+                                 component metadata using the @component decorator's "templateUrl" property.
+
+--> CONSTRUCTOR :
+
+      |- It is used to initialize components.
+
+      e.g.export class AppComponent
+{
+    title : String;
+                  hero : String;
+
+           constructor()
+    {
+        this.title = ' Tour Of Heros';
+        this.hero = 'Windstorm';
+    }
+} 
+  
+--> SHOWING AN ARRAY PROPERTY WITH* ngFor :
+
+      |-  export class AppComponent
+{
+
+    title = 'Tour of Heroes';
+              heroes = ['Windstorm' , 'Flash' , 'Batman' , 'Spiderman'];
+
+               myHero = this.heroes[0];
+            }    
+
+     |- Now in template file we'll write :
+
+              <h1> {{title}} </h1>
+              <h2> My favorite Hero is : {{myHero}} </h2>
+
+               <p>  Heroes:  </p>
+              <ul>
+                <li* ngFor = "let hero of heroes" >
+                     {{hero}}
+                </li>
+              </ul>
+
+    |- * ngFor directive is used to display each item in heroes list.
+ 
+    |- *ngFor in the<li> element is the Angular "repeater" directive.
+          |- It marks that<li> element (and its children) as the "repeater template".
+
+  * Note :- "hero" in the* ngFor double-quoted instruction is an example of a "template input variable".
+
+    |- Angular duplicates the<li> for each item in the list, setting the "hero" variableto the item in the
+     current iteration.
+          Angular uses that variable as the interpolation in the doubley curly braces.
+
+  *Note :- In this case, * ngFor is displaying an array but it can repeat items for any iterable object.
+
+  *Note :- IMPORTANT CONCEPTS REGARDING* ngFor :
+
+    |- The ( * ) prefix to ngFor is a critical part of this syntax.
+    |- It indicates that<li> element and its children constitute a master template.
+    |-
+
+
+--> CREATING A CLASS FOR THE DATA :
+
+     |- When we need to convert any binding to specialized objects, then we change their array into objects,
+        and for doing so we'll be needing a particular class for that.
+
+   e.g.We create a new file within "app", call it "hero.ts" and then define
+
+         export class Hero
+{
+
+                constructor(
+                  public id : number;
+                  public name : String;
+              ){}          
+           }
+
+     |- After creating the class we need to import this class in our app.component.ts file
+
+         import { Hero}
+from "./hero";
+        
+         export class AppComponent
+{
+
+    title = 'Tour Of Heroes';
+               heroes = [
+                   new Hero(1,'Windstorm'),
+                   new Hero(2,'Flash'),
+                   new Hero(3,'Batman'),
+                   new HEro(4,'Spiderman')
+                      ];
+                 
+         myHero = this.heroes[0];
+       }
+
+    |- And the corresponding HTML File is 
+
+              <h1> {{title}} </h1>
+              <h2> My favorite Hero is {{myHero.name}} </h2>
+              <p> Heroes</p>
+              <ul>
+              <li* ngFor = "let hero of heroes" >
+                   {{hero.name}}
+              </li>
+              </ul>
+
+--> CONDITIONAL DISPLAY WITH* ngIf :
+
+       |- Sometimes an application needs to display a view or a portion of a view only under certain
+          cicumstances.
+
+       |- The Angular *ngIf directive "inserts or removes" an element based on a "truthy/falsy" condition.
+
+       e.g.
+             <p* ngIf = "heroes.length > 3" >
+                 This would be printed if items are greater than 3
+             </p>
+
+       |-it will behave like TypeScript.
+    
+       |- when the component's list of heroes has more than three items, Angular adds the paragraph to the DOM
+          and the message appears.
+                  If there are three or fewer items , Angular omits the paragraph, so no message appears.
+
+*Note :- Angular isn't showing and hiding the message. It is adding and removing the paragraph elements 
+         from the DOM.That improves performance, especially in larger projects when conditionally including
+         or excluding big chunks of HTML with many data bindings.
+
+--> TWO WAY DATA BINDING : [(ngModel)]
+
+     |- [(ngModel)] is the Angular syntax used for two way data binding.
+
+     |- It belongs to the optional "FormsModule". i.e, it isn't available by default.
+
+     |- By using this , data flows in "both directions": from property to the text box and vice-versa.
+
+  e.g. <div>
+          <label> name: </label>
+          <input[(ngModel)]= "myHero.name" placeholder= "name" >
+       </ div >
+
+    ==> import {FormsModule}
+from '@angular/forms';
+    ==> imports: [FormsModule]
+
+ *** Tour Of Heros Tutorial***
+***************************************************************************************************************
+                                          *** PART TWO***
+***************************************************************************************************************
+
+--> HANDLE CLICK EVENTS :
+    
+   e.g.
+           ==>    <li* ngFor = "let hero of heroes"(click) = "onSelect(hero)" > </ li >
+
+          | -Here the parentheses identify the<li> elements "click" event as the target.
+     
+          |- The "onSelect(hero)" expressions calls the AppComponent method, "onSelect()", passing the
+             template input variable "hero", as an "argument". 
+        
+          |- This "hero" is same as the "hero" of ngFor directive.
+
+--> CONST :
+
+      |- We can use "const" to declare a variable but unlike "let" and "var" it must be "immediately 
+         initialized", with a value that can't be changed afterwards.
+    
+      |- const lets us declare variables which don’t change over time, which are "immutable"
+
+
+                                           *** Tour Of Heros Tutorial ***
+***************************************************************************************************************
+                                          *** PART ONE ***
+***************************************************************************************************************
+ --> { { } } :
+
+      |- Angular's "interpolation binding syntax".
+
+      |- These interpolation bindings present the component's property values , as "strings" , inside the 
+         HTML header tags.
+  
+ --> DISPLAYING DATA :
+
+     |- Data can be displayed by binding controls in an HTML template to properties of an angular component.
+
+                 export class AppComponent
+{
+    property  -->    title = 'Tour of Heroes';  
+   "       -->    hero = 'Windstorm';
+                 }
+
+     |- to display data we can simply bind this property with interpolation in our HTML View.
+        i.e,
+
+          <h1> {{title}} </h1>
+          <h2> {{hero}} </h2>
+
+ --> TEMPLATE :
+
+      |- It is a multi-line string within ECMAScript 2015 backticks( ` ) .
+
+      |- Backtick( ` ) is different from single quote( ' ).
+
+      |- Backtick allows us to compose a "string" over several lines, which makes the HTML more readable.
+    
+      |- It can be defined using two methods :-
+
+         (1) Template "inline" : In it we use template property.
+
+         (2) Template "File"   : In it we define template in a separate HTML file and link to it in the
+                                 component metadata using the @component decorator's "templateUrl" property.
+
+--> CONSTRUCTOR :
+
+      |- It is used to initialize components.
+
+      e.g.export class AppComponent
+{
+    title : String;
+                  hero : String;
+
+           constructor()
+    {
+        this.title = ' Tour Of Heros';
+        this.hero = 'Windstorm';
+    }
+} 
+  
+--> SHOWING AN ARRAY PROPERTY WITH* ngFor :
+
+      |-  export class AppComponent
+{
+
+    title = 'Tour of Heroes';
+              heroes = ['Windstorm' , 'Flash' , 'Batman' , 'Spiderman'];
+
+               myHero = this.heroes[0];
+            }    
+
+     |- Now in template file we'll write :
+
+              <h1> {{title}} </h1>
+              <h2> My favorite Hero is : {{myHero}} </h2>
+
+               <p>  Heroes:  </p>
+              <ul>
+                <li* ngFor = "let hero of heroes" >
+                     {{hero}}
+                </li>
+              </ul>
+
+    |- * ngFor directive is used to display each item in heroes list.
+ 
+    |- *ngFor in the<li> element is the Angular "repeater" directive.
+          |- It marks that<li> element (and its children) as the "repeater template".
+
+  * Note :- "hero" in the* ngFor double-quoted instruction is an example of a "template input variable".
+
+    |- Angular duplicates the<li> for each item in the list, setting the "hero" variableto the item in the
+     current iteration.
+          Angular uses that variable as the interpolation in the doubley curly braces.
+
+  *Note :- In this case, * ngFor is displaying an array but it can repeat items for any iterable object.
+
+  *Note :- IMPORTANT CONCEPTS REGARDING* ngFor :
+
+    |- The ( * ) prefix to ngFor is a critical part of this syntax.
+    |- It indicates that<li> element and its children constitute a master template.
+    |-
+
+
+--> CREATING A CLASS FOR THE DATA :
+
+     |- When we need to convert any binding to specialized objects, then we change their array into objects,
+        and for doing so we'll be needing a particular class for that.
+
+   e.g.We create a new file within "app", call it "hero.ts" and then define
+
+         export class Hero
+{
+
+                constructor(
+                  public id : number;
+                  public name : String;
+              ){}          
+           }
+
+     |- After creating the class we need to import this class in our app.component.ts file
+
+         import { Hero}
+from "./hero";
+        
+         export class AppComponent
+{
+
+    title = 'Tour Of Heroes';
+               heroes = [
+                   new Hero(1,'Windstorm'),
+                   new Hero(2,'Flash'),
+                   new Hero(3,'Batman'),
+                   new HEro(4,'Spiderman')
+                      ];
+                 
+         myHero = this.heroes[0];
+       }
+
+    |- And the corresponding HTML File is 
+
+              <h1> {{title}} </h1>
+              <h2> My favorite Hero is {{myHero.name}} </h2>
+              <p> Heroes</p>
+              <ul>
+              <li* ngFor = "let hero of heroes" >
+                   {{hero.name}}
+              </li>
+              </ul>
+
+--> CONDITIONAL DISPLAY WITH* ngIf :
+
+       |- Sometimes an application needs to display a view or a portion of a view only under certain
+          cicumstances.
+
+       |- The Angular *ngIf directive "inserts or removes" an element based on a "truthy/falsy" condition.
+
+       e.g.
+             <p* ngIf = "heroes.length > 3" >
+                 This would be printed if items are greater than 3
+             </p>
+
+       |-it will behave like TypeScript.
+    
+       |- when the component's list of heroes has more than three items, Angular adds the paragraph to the DOM
+          and the message appears.
+                  If there are three or fewer items , Angular omits the paragraph, so no message appears.
+
+*Note :- Angular isn't showing and hiding the message. It is adding and removing the paragraph elements 
+         from the DOM.That improves performance, especially in larger projects when conditionally including
+         or excluding big chunks of HTML with many data bindings.
+
+--> TWO WAY DATA BINDING : [(ngModel)]
+
+     |- [(ngModel)] is the Angular syntax used for two way data binding.
+
+     |- It belongs to the optional "FormsModule". i.e, it isn't available by default.
+
+     |- By using this , data flows in "both directions": from property to the text box and vice-versa.
+
+  e.g. <div>
+          <label> name: </label>
+          <input[(ngModel)]= "myHero.name" placeholder= "name" >
+       </ div >
+
+    ==> import {FormsModule}
+from '@angular/forms';
+    ==> imports: [FormsModule]
+
+ *** Tour Of Heros Tutorial***
+***************************************************************************************************************
+                                          *** PART TWO***
+***************************************************************************************************************
+
+--> HANDLE CLICK EVENTS :
+    
+   e.g.
+           ==>    <li* ngFor = "let hero of heroes"(click) = "onSelect(hero)" > </ li >
+
+          | -Here the parentheses identify the<li> elements "click" event as the target.
+     
+          |- The "onSelect(hero)" expressions calls the AppComponent method, "onSelect()", passing the
+             template input variable "hero", as an "argument". 
+        
+          |- This "hero" is same as the "hero" of ngFor directive.
+
+--> CONST :
+
+      |- We can use "const" to declare a variable but unlike "let" and "var" it must be "immediately 
+         initialized", with a value that can't be changed afterwards.
+    
+      |- const lets us declare variables which don’t change over time, which are "immutable"
+
+    */
+ 
